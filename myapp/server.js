@@ -64,6 +64,10 @@ function performRequest(endpoint,method,data,success){
 
 
 // Routes
+app.get('/', function(req, res){
+	res.send('FGBG TEST')
+})
+
 app.get('/search', function(req, res){
 	// Get a User
 	var url = 'https://api.spotify.com/v1/users/'
