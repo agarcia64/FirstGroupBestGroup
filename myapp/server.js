@@ -6,6 +6,8 @@ var request = require('request')
 var querystring = require('querystring')
 var cookieParser = require('cookie-parser')
 var SpotifyWebApi = require('spotify-web-api-node');
+var path = require('path');
+var jQuery = require('jquery');
 
 // Parameters
 var port = 8888
@@ -20,16 +22,69 @@ var spotifyApi = new SpotifyWebApi({
   redirectUri : 'http://localhost:8888/'
 });
 
-// Routes
-app.get('/', function(req, res){
-	// Get a User
-/*	request('https://api.spotify.com/v1/users/equistice', function (error, response, body) {
-	  if (!error && response.statusCode == 200) {
-	    res.send(body) // Print the google web page.
-	  }
-	})*/
+/*
+function performRequest(endpoint,method,data,success){
+	var dataString = JSON.stringify(data);
+	var headers = {};
 
-	res.render('test.html');
+	if (method == 'GET')
+	{
+		endpoint += '?' + querystring.stringify(data);
+	}
+
+	var options = {
+		path: endpoint,
+		method: method,
+		headers: headers
+	}
+
+	var req = request(options, function(res)
+	{
+		var responseString = '';
+
+		res.on('data', function(data)
+		{
+			responseString += data;
+		});
+
+		res.on('end', function()
+		{
+			console.log(responseString);
+			var responseObject = JSON.parse(responseString);
+			success(responseObject);
+		});
+	});
+
+
+	req.write(dataString);
+	req.end();
+}
+*/
+
+
+
+// Routes
+app.get('/search', function(req, res){
+	// Get a User
+	var url = 'https://api.spotify.com/v1/users/'
+	var q = req.query.q;
+	//var type = req.params.type;
+
+	url += q;
+
+	// url += 'q=';
+	// url += q;
+	// url += 'type=';
+	// url += type;
+
+	request(url, function (error, response, body) {
+	  if (!error && response.statusCode == 200) {
+	  	var out = JSON.stringify(body, null, 10);
+	  	res.send(out) // Print the google web page.
+	  }
+	})
+
+
 
 });
 
