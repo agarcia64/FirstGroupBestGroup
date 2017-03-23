@@ -23,11 +23,14 @@ var spotifyApi = new SpotifyWebApi({
 // Routes
 app.get('/', function(req, res){
 	// Get a User
-	request('https://api.spotify.com/v1/users/equistice', function (error, response, body) {
+/*	request('https://api.spotify.com/v1/users/equistice', function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
 	    res.send(body) // Print the google web page.
 	  }
-	})
+	})*/
+
+	res.render('test.html');
+
 });
 
 
