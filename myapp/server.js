@@ -22,47 +22,6 @@ var spotifyApi = new SpotifyWebApi({
   redirectUri : 'http://localhost:8888/'
 });
 
-/*
-function performRequest(endpoint,method,data,success){
-	var dataString = JSON.stringify(data);
-	var headers = {};
-
-	if (method == 'GET')
-	{
-		endpoint += '?' + querystring.stringify(data);
-	}
-
-	var options = {
-		path: endpoint,
-		method: method,
-		headers: headers
-	}
-
-	var req = request(options, function(res)
-	{
-		var responseString = '';
-
-		res.on('data', function(data)
-		{
-			responseString += data;
-		});
-
-		res.on('end', function()
-		{
-			console.log(responseString);
-			var responseObject = JSON.parse(responseString);
-			success(responseObject);
-		});
-	});
-
-
-	req.write(dataString);
-	req.end();
-}
-*/
-
-
-
 // Routes
 app.get('/', function(req, res){
 	res.send('FGBG TEST')
@@ -76,11 +35,6 @@ app.get('/search', function(req, res){
 
 	url += q;
 
-	// url += 'q=';
-	// url += q;
-	// url += 'type=';
-	// url += type;
-
 	request(url, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
 	  	var out = JSON.stringify(body, null, 10);
@@ -91,7 +45,6 @@ app.get('/search', function(req, res){
 
 
 });
-
 
 // Start the server
 app.listen(port);
