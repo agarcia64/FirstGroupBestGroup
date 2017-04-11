@@ -31,7 +31,7 @@ app.get('/', function(req, res){
 	res.send('FGBG TEST')
 })
 
-app.get('/search', function(req, res){
+app.get('/add', function(req, res){
 	// Get a User
 	var url = 'https://api.spotify.com/v1/users/'
 	var q = req.query.q;
@@ -68,6 +68,44 @@ var insertUser = function(db, user, callback) {
 			callback(result);
 		});
 }
+
+app.get('/search', function(req, res){
+	// Get a User
+	var url = 'https://api.spotify.com/v1/users/'
+	var q = req.query.q;
+	//var type = req.params.type;
+
+	url += q;
+
+	MongoClient.connect(data, function(err, db) {
+  			assert.equal(null, err);
+  			console.log("Connected successfully to server");
+
+
+			findUser(db, q, function() {
+  				db.close();
+  			})
+		});
+
+	request(url, function (error, response, body) {
+	  if (!error && response.statusCode == 200) {
+	  	var out = JSON.parse(body)
+
+	  	 // Print the google web page.
+	  }
+	})
+
+var findUser = function(db, user, callback) {
+	var collection = db.collection('users');
+
+	collection.find({'id': user}).toArray(function(err, user) {
+		assert.equal(err, null);
+		console.log("Found the User")
+		var out = JSON.stringify(user)
+		res.send(out)
+		});
+	}
+});
 
 
 
