@@ -8,6 +8,10 @@ var cookieParser = require('cookie-parser')
 var SpotifyWebApi = require('spotify-web-api-node');
 var path = require('path');
 var jQuery = require('jquery');
+var MongoClient = require('mongodb').MongoClient
+  , assert = require('assert');
+
+var data = 'mongodb://localhost:27017/';
 
 // Parameters
 var port = 8888
@@ -37,14 +41,35 @@ app.get('/search', function(req, res){
 
 	request(url, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
-	  	var out = JSON.stringify(body, null, 10);
-	  	res.send(out) // Print the google web page.
+	  	var out = JSON.parse(body)
+
+	  	MongoClient.connect(data, function(err, db) {
+  			assert.equal(null, err);
+  			console.log("Connected successfully to server");
+
+  			insertUser(db, out, function() {
+  				db.close();
+  			})
+		}); // Print the google web page.
 	  }
 	})
-
-
-
 });
+
+var insertUser = function(db, user, callback) {
+	var collection = db.collection('users');
+
+	collection.insert([
+		user
+		], function(err, result){
+			assert.equal(err, null);
+			assert.equal(1, result.result.n)
+			assert.equal(1, result.ops.length)
+			console.log("Inserted a user into the collection")
+			callback(result);
+		});
+}
+
+
 
 // Start the server
 app.listen(port);
