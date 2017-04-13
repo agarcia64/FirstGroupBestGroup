@@ -36,12 +36,13 @@
           <input type="text" id="query" value="" class="form-control" placeholder="Type an Artist Name"/>
           <input type="submit" id="search" class="btn btn-primary" value="Search" />
         </form>
-
+        <div id="results"></div>
+        
         <script id="results-template" type="text/x-handlebars-template">
-          {{#each albums.items}}
-          <div style="background-image:url({{images.0.url}})" data-album-id="{{id}}" class="cover"></div>
-          {{/each}}
-        </script>
+            {{#each albums.items}}
+            <div style="background-image:url({{images.0.url}})" data-album-id="{{id}}" class="cover"></div>
+            {{/each}}
+        </script> 
         <!-- End Search Feature -->
 
       </div>
@@ -93,6 +94,10 @@
           }
           return hashParams;
         }
+
+        var cutVal = 141,
+            cutDiff = 185
+            idArray = [];
 
         var userProfileSource = document.getElementById('user-profile-template').innerHTML,
             userProfileTemplate = Handlebars.compile(userProfileSource),
@@ -153,6 +158,7 @@
           var templateSource = document.getElementById('results-template').innerHTML,
               template = Handlebars.compile(templateSource),
               resultsPlaceholder = document.getElementById('results'),
+              temp = resultsPlaceholder,
               playingCssClass = 'playing',
               audioObject = null;
 
@@ -173,15 +179,25 @@
                       type: 'album'
                   },
                   success: function (response) {
-                      console.log(response);
                       resultsPlaceholder.innerHTML = template(response);
+                      console.log(resultsPlaceholder.innerHTML);
+                      console.log(1);
+                      var temp = 0;
+                      // Getting the album id's and storing them  
+                      for(i=cutVal; i<resultsPlaceholder.innerHTML.length; i+=cutDiff){
+                        idArray.push(resultsPlaceholder.innerHTML.slice(i,i+22));
+                        console.log(idArray[temp]);
+                        temp++;
+                      }
+
                   }
               });
           };
-          console.log(1);
+          
+
+
           document.getElementById('search-form').addEventListener('submit', function (e) {
               e.preventDefault();
-              console.log(document.getElementById('query').value);
               searchAlbums(document.getElementById('query').value);
             }, false);
         }
