@@ -1,6 +1,8 @@
+
 //server.js
 
 // Packages Included
+var async = require('async')
 var express = require('express')
 var request = require('request')
 var querystring = require('querystring')
@@ -38,7 +40,6 @@ app.get('/add', function(req, res){
 	//var type = req.params.type;
 
 	url += q;
-
 	request(url, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
 	  	var out = JSON.parse(body)
@@ -74,40 +75,81 @@ app.get('/search', function(req, res){
 	var url = 'https://api.spotify.com/v1/users/'
 	var q = req.query.q;
 	//var type = req.params.type;
-
 	url += q;
-
-	MongoClient.connect(data, function(err, db) {
+	async.series([
+	async function(callback) {
+		MongoClient.connect(data, async function(err, db) {
   			assert.equal(null, err);
+  			console.log("Here")
   			console.log("Connected successfully to server");
 
+  					var myArr = findUser(db, q, function() {
+  					db.close();
+  				})
+  					await sleep(4000)
+  					console.log(myArr)
+  					if (myArr.length == 0) {
+					request(url, function (error, response, body) {
+	  					if (!error && response.statusCode == 200) {
+	  					var add = JSON.parse(body)
+	  					var out = JSON.stringify(body, null, 10)
 
-			findUser(db, q, function() {
-  				db.close();
-  			})
-		});
+  					insertUser(db, add , function() {
+  					db.close();
+  					})
+  				res.send(out)
+		}
+	})
+}
+		else {
+			res.send(JSON.stringify(results, null, 10))
+		}
 
-	request(url, function (error, response, body) {
-	  if (!error && response.statusCode == 200) {
-	  	var out = JSON.parse(body)
+  		});	
+  		callback
+
+		},
+		]);
 
 	  	 // Print the google web page.
-	  }
-	})
+	  });
 
 var findUser = function(db, user, callback) {
+	
 	var collection = db.collection('users');
 
 	collection.find({'id': user}).toArray(function(err, user) {
 		assert.equal(err, null);
-		console.log("Found the User")
-		var out = JSON.stringify(user)
-		res.send(out)
-		});
-	}
-});
+		console.log("User Found")
+		console.log(user)
+		return user
+		})
+		};
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
+app.get('/delete', function(req, res){
+		var q = req.query.q;
+	MongoClient.connect(data, function(err, db) {
+  			assert.equal(null, err);
+  			console.log("Connected successfully to server");
+  			deleteUser(db, q,  function() {
+  				db.close();
+  			})
+  		});
+  	});
+
+ var deleteUser = function(db,user, callback) {
+ 	var collection = db.collection('users');
+
+ 	collection.deleteMany({'id':user}, function(err, result) {
+ 		assert.equal(err, null);
+ 		console.log("Deleted User")
+ 		callback(result)
+ 	})
+ }
 
 // Start the server
 app.listen(port);
