@@ -8,5 +8,19 @@
     "express": "~4.0.0",
     "querystring": "~0.2.0",
     "request": "~2.34.0"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agarcia64/FirstGroupBestGroup.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agarcia64/FirstGroupBestGroup/issues"
+  },
+  "homepage": "https://github.com/agarcia64/FirstGroupBestGroup#readme"
 }
