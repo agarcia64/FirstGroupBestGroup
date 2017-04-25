@@ -1,0 +1,42 @@
+/*
+* Skeleton V2.0.4
+* Copyright 2014, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 12/29/2014
+*/
+
+
+/* Table of contents
+––––––––––––––––––––––––––––––––––––––––––––––––––
+  Site Styles
+
+
+
+/* Site Styles
+-------------------------------------------------- */
+{
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -box-sizing: border-box;
+}
+
+/* Bands
+---------------- */
+.band.header {
+	margin: auto;
+	width: 100%;
+	height: 955px;
+	opacity: 50%;
+  background: url(../images/background.jpg),
+              #f8f8f8;
+  color: #e0e0e0;
+}
+
+.header{
+  text-align: center;
+}
+
+/* Site Styles
+-------------------------------------------------- */
