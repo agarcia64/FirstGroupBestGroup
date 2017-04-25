@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Reddit Playlist of the Day!</title>
+  <meta name="description" content="Connecting the Reddit API to Spotify to create a daily listing of reddit.com/r/music's top daily posts">
+  <meta name="author" content="FirstGroupBestGroup">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/layout.css">
+
+  <!-- Images
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="background-image" type="image/png" href="images/background.jpg">
+
+</head>
+
+
+
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->  
+<body>
+  <div class="band header">
+    <div class="container">
+
+      <section class="header">
+        <div class="container">
+        <h2 class="title"> Surprise, motherf*ckers. </h2>
+        <p> Because censoring that 'u' makes it better.</p>
+        </div>
+      </section>
+    </div>  <!-- container -->
+  </div> <!-- band header -->
+
+  <div class="band body">
+    <div class="container">
+
+      <div id="login" style= "text-align: center;">
+        <div class="">
+          <h4>We got shit working.</h4>
+          <p></p>
+          <a class="button button-primary" href="/login">We gon' use this to log in</a>
+          <p></p>
+          <p>We're gonna make a Reddit playlist of the day for you.<br>Yeah, you heard right. </p>
+        </div>
+      </div>
+    </div> <!-- container -->
+  </div> <!-- band body -->
+
+  <div class="container">
+    <div id="loggedin">
+     
+      <div id="search-genre" style= "text-align: center;">
+        <h5>Now. Gimme your favorite genre. Or not.</h5>
+        <form id="search-form">
+          <label for="searching">Genre</label>
+          <input class="u-half-width" type="text" placeholder="Up to you." id="query">
+          <input type="submit" id="search" class="btn btn-primary" value="Search" />
+
+
+        <label for="search-dropdown">Or this works too.</label>
+        <select class="u-half-width" id="search-dropdown">
+          <option value="Option 1">Lazy F*ck</option>
+          <option value="Option 2">Pop</option>
+          <option value="Option 3">Rock</option>
+          <option value="Option 4">R&B</option>
+          <option value="Option 5">Hip Hop</option>
+          <option value="Option 6">Alternative</option>
+          <option value="Option 7">Polka</option>
+          <option value="Option 8">K-Pop</option>
+        </select>
+        <input type="submit" id="search" class="btn btn-primary" value="Search" />
+        </form>
+        
+        <div id="results"></div>
+        
+        <script id="results-template" type="text/x-handlebars-template">
+            {{#each albums.items}}
+            <div style="background-image:url({{images.0.url}})" data-album-id="{{id}}" class="cover"></div>
+            {{/each}}
+        </script> 
+      </div> <!-- Search Genre-->
+
+
+
+      <div id="user-profile"> </div>
+      <div id="oauth"> </div>
+      <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+
+    </div> <!-- loggedin -->
+  </div> <!-- container -->
+
+  <div class="band footer">
+    <div class="container">
+      <section class="header">
+        <div class="container">
+        <h2 class="title"> Footer, motherf*ckers. </h2>
+        <p> Because censoring that 'u' makes it better.</p>
+        </div>
+      </section>
+    </div>  <!-- container -->
+  </div> <!-- band footer -->
+
+  <div class="band bottom">
+    <div class="container">
+      <section class="header">
+        <div class="container">
+        <h2 class="title"> Bottom, motherf*ckers. </h2>
+        <p> Because censoring that 'u' makes it better.</p>
+        </div>
+      </section>
+    </div>  <!-- container -->
+  </div> <!-- band footer -->
+
+
+
+
+  
+
+
+
+  <script id="user-profile-template" type="text/x-handlebars-template">
+    <h1>Logged in as {{display_name}}</h1>
+    <div class="media">
+      <div class="pull-left">
+        <img class="media-object" width="150" src="{{images.0.url}}" />
+      </div>
+      <div class="media-body">
+        <dl class="dl-horizontal">
+          <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
+          <dt>Id</dt><dd>{{id}}</dd>
+          <dt>Email</dt><dd>{{email}}</dd>
+          <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
+          <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
+          <dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
+          <dt>Country</dt><dd>{{country}}</dd>
+        </dl>
+      </div>
+    </div>
+  </script>
+
+
+
+  <script id="oauth-template" type="text/x-handlebars-template">
+    <h2>oAuth info</h2>
+    <dl class="dl-horizontal">
+      <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
+      <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}></dd>
+    </dl>
+  </script>
+
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script>
+    (function() {
+
+      /**
+       * Obtains parameters from the hash of the URL
+       * @return Object
+       */
+      function getHashParams() {
+        var hashParams = {};
+        var e, r = /([^&;=]+)=?([^&;]*)/g,
+            q = window.location.hash.substring(1);
+        while ( e = r.exec(q)) {
+           hashParams[e[1]] = decodeURIComponent(e[2]);
+        }
+        return hashParams;
+      }
+
+      var cutVal = 141,
+          cutDiff = 185
+          idArray = [];
+
+      var userProfileSource = document.getElementById('user-profile-template').innerHTML,
+          userProfileTemplate = Handlebars.compile(userProfileSource),
+          userProfilePlaceholder = document.getElementById('user-profile');
+
+      var oauthSource = document.getElementById('oauth-template').innerHTML,
+          oauthTemplate = Handlebars.compile(oauthSource),
+          oauthPlaceholder = document.getElementById('oauth');
+
+      var params = getHashParams();
+
+      var access_token = params.access_token,
+          refresh_token = params.refresh_token,
+          error = params.error;
+      if (error) {
+        alert('There was an error during the authentication');
+      } else {
+        if (access_token) {
+          // render oauth info
+          oauthPlaceholder.innerHTML = oauthTemplate({
+            access_token: access_token,
+            refresh_token: refresh_token
+          });
+
+          $.ajax({
+              url: 'https://api.spotify.com/v1/me',
+              headers: {
+                'Authorization': 'Bearer ' + access_token
+              },
+              success: function(response) {
+                userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+
+                $('#login').hide();
+                $('#loggedin').show();
+              }
+          });
+        } else {
+            // render initial screen
+            $('#login').show();
+            $('#loggedin').hide();
+        }
+
+        document.getElementById('obtain-new-token').addEventListener('click', function() {
+          $.ajax({
+            url: '/refresh_token',
+            data: {
+              'refresh_token': refresh_token
+            }
+          }).done(function(data) {
+            access_token = data.access_token;
+            oauthPlaceholder.innerHTML = oauthTemplate({
+              access_token: access_token,
+              refresh_token: refresh_token
+            });
+          });
+        }, false);
+        // find template and compile it
+        var templateSource = document.getElementById('results-template').innerHTML,
+            template = Handlebars.compile(templateSource),
+            resultsPlaceholder = document.getElementById('results'),
+            temp = resultsPlaceholder,
+            playingCssClass = 'playing',
+            audioObject = null;
+
+        var fetchTracks = function (albumId, callback) {
+            $.ajax({
+                url: 'https://api.spotify.com/v1/albums/' + albumId,
+                success: function (response) {
+                    callback(response);
+                }
+            });
+        };
+
+        var searchAlbums = function (query) {
+            $.ajax({
+                url: 'https://api.spotify.com/v1/search',
+                data: {
+                    q: query,
+                    type: 'album'
+                },
+                success: function (response) {
+                    resultsPlaceholder.innerHTML = template(response);
+                    console.log(resultsPlaceholder.innerHTML);
+                    console.log(1);
+                    var temp = 0;
+                    // Getting the album id's and storing them  
+                    for(i=cutVal; i<resultsPlaceholder.innerHTML.length; i+=cutDiff){
+                      idArray.push(resultsPlaceholder.innerHTML.slice(i,i+22));
+                      console.log(idArray[temp]);
+                      temp++;
+                    }
+
+                }
+            });
+        };
+
+        document.getElementById('search-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            searchAlbums(document.getElementById('query').value);
+          }, false);
+      }
+    })();
+  </script>
+
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
+
