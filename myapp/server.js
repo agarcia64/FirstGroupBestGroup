@@ -21,8 +21,8 @@ var Promise = require('es6-promise').Promise;
 
 // credentials are optional
 var spotifyApi = new SpotifyWebApi({
-  clientId : '73eabb400d3a407fac773255d5653c73',
-  clientSecret : '69238deb66f94f06947b5842a0136738',
+  clientId : '06630b340a1843bc85e48e2ea681f0be',
+  clientSecret : '90569089fedf41a8bf89e9dc46260fd6',
   redirectUri : 'http://localhost:8888/'
 });
 
