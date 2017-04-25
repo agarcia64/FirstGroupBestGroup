@@ -21,10 +21,12 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/layout.css">
 
-  <!-- Favicon
+  <!-- Images
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="background-image" type="image/png" href="images/background.jpg">
 
 </head>
 
@@ -33,23 +35,34 @@
 <!-- Primary Page Layout
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->  
 <body>
-  <div class="container">
+  <div class="band header">
+    <div class="container">
 
-    <section class="header">
-      <h2 class="title"> Surprise, motherf*ckers. </h2>
-      <p> Because censoring that 'u' makes it better.
-    </section>
+      <section class="header">
+        <div class="container">
+        <h2 class="title"> Surprise, motherf*ckers. </h2>
+        <p> Because censoring that 'u' makes it better.</p>
+        </div>
+      </section>
+    </div>  <!-- container -->
+  </div> <!-- band header -->
 
-    <div id="login" style= "text-align: center;">
-      <div class="">
-        <h4>We got shit working.</h4>
-        <p></p>
-        <a class="button button-primary" href="/login">We gon' use this to log in</a>
-        <p></p>
-        <p>We're gonna make a Reddit playlist of the day for you.<br>Yeah, you heard right. </p>
+  <div class="band body">
+    <div class="container">
+
+      <div id="login" style= "text-align: center;">
+        <div class="">
+          <h4>We got shit working.</h4>
+          <p></p>
+          <a class="button button-primary" href="/login">We gon' use this to log in</a>
+          <p></p>
+          <p>We're gonna make a Reddit playlist of the day for you.<br>Yeah, you heard right. </p>
+        </div>
       </div>
-    </div>
+    </div> <!-- container -->
+  </div> <!-- band body -->
 
+  <div class="container">
     <div id="loggedin">
      
       <div id="search-genre" style= "text-align: center;">
@@ -69,6 +82,7 @@
           <option value="Option 5">Hip Hop</option>
           <option value="Option 6">Alternative</option>
           <option value="Option 7">Polka</option>
+          <option value="Option 8">K-Pop</option>
         </select>
         <input type="submit" id="search" class="btn btn-primary" value="Search" />
         </form>
@@ -83,15 +97,40 @@
       </div> <!-- Search Genre-->
 
 
-<!--- WTF is this?
 
       <div id="user-profile"> </div>
       <div id="oauth"> </div>
       <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
--->
 
     </div> <!-- loggedin -->
   </div> <!-- container -->
+
+  <div class="band footer">
+    <div class="container">
+      <section class="header">
+        <div class="container">
+        <h2 class="title"> Footer, motherf*ckers. </h2>
+        <p> Because censoring that 'u' makes it better.</p>
+        </div>
+      </section>
+    </div>  <!-- container -->
+  </div> <!-- band footer -->
+
+  <div class="band bottom">
+    <div class="container">
+      <section class="header">
+        <div class="container">
+        <h2 class="title"> Bottom, motherf*ckers. </h2>
+        <p> Because censoring that 'u' makes it better.</p>
+        </div>
+      </section>
+    </div>  <!-- container -->
+  </div> <!-- band footer -->
+
+
+
+
+  
 
 
 
