@@ -25,13 +25,18 @@
 /* Bands
 ---------------- */
 .band.header {
+	margin: auto;
+	width: 100%;
+	height: 955px;
+	opacity: 50%;
   background: url(../images/background.jpg),
               #f8f8f8;
-  padding: 1080px 0 0px 0;
   color: #e0e0e0;
 }
 
-
+.header{
+  text-align: center;
+}
 
 /* Site Styles
 -------------------------------------------------- */

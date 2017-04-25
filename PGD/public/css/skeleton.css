@@ -28,12 +28,6 @@
 
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.header{
-  margin-top: 6rem;
-  text-align: center;
-  background-image: url("background.jpg");
-}
-
 .container {
   position: relative;
   width: 100%;
@@ -368,6 +362,10 @@ form {
 .u-full-width {
   width: 100%;
   box-sizing: border-box; }
+.u-quarter-width {
+  width: 25%;
+  box-sizing: border-box; 
+  color: #222;}
 .u-max-full-width {
   max-width: 100%;
   box-sizing: border-box; }
