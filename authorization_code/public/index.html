@@ -90,8 +90,8 @@
         <div id="results"></div>
         
         <script id="results-template" type="text/x-handlebars-template">
-            {{#each albums.items}}
-            <div style="background-image:url({{images.0.url}})" data-album-id="{{id}}" class="cover"></div>
+            {{#each tracks.items}}
+            <div style="background-image:url({{images.0.url}})" data-track-id="{{id}}" class="cover"></div>
             {{/each}}
         </script> 
       </div> <!-- Search Genre-->
@@ -185,13 +185,14 @@
         return hashParams;
       }
 
-      var cutVal = 141,
-          cutDiff = 185
+      var cutVal = 63+14,
+          cutDiff = 99+22
           idArray = [];
 
       var userProfileSource = document.getElementById('user-profile-template').innerHTML,
           userProfileTemplate = Handlebars.compile(userProfileSource),
-          userProfilePlaceholder = document.getElementById('user-profile');
+          userProfilePlaceholder = document.getElementById('user-profile')
+          userId = document.getElementById('Id');
 
       var oauthSource = document.getElementById('oauth-template').innerHTML,
           oauthTemplate = Handlebars.compile(oauthSource),
@@ -252,41 +253,59 @@
             playingCssClass = 'playing',
             audioObject = null;
 
-        var fetchTracks = function (albumId, callback) {
+        var fetchTracks = function (trackId, callback) {
             $.ajax({
-                url: 'https://api.spotify.com/v1/albums/' + albumId,
+                url: 'https://api.spotify.com/v1/tracks/' + trackId,
                 success: function (response) {
                     callback(response);
                 }
             });
         };
 
-        var searchAlbums = function (query) {
+        var searchTracks = function (query) {
             $.ajax({
                 url: 'https://api.spotify.com/v1/search',
                 data: {
                     q: query,
-                    type: 'album'
+                    type: 'track'
                 },
                 success: function (response) {
                     resultsPlaceholder.innerHTML = template(response);
-                    console.log(resultsPlaceholder.innerHTML);
-                    console.log(1);
+                    // console.log(resultsPlaceholder.innerHTML);
+                    //console.log();
                     var temp = 0;
-                    // Getting the album id's and storing them  
+                    // Getting the track id's and storing them  
                     for(i=cutVal; i<resultsPlaceholder.innerHTML.length; i+=cutDiff){
                       idArray.push(resultsPlaceholder.innerHTML.slice(i,i+22));
-                      console.log(idArray[temp]);
+                      //console.log(idArray[temp]);
                       temp++;
                     }
 
+                    createPlaylist(temp);
+                }
+            });
+        };
+
+        var createPlaylist = function(temp){
+            $.ajax({
+                url: 'https://api.spotify.com/v1/users/22534tdgm62i47li5pdj7o5ny/playlists/',
+                headers: {
+                'Authorization': 'Bearer ' + access_token,
+                'Content-Type': 'application/json'
+              },
+                data: {
+                  name: 'test4'
+              },
+                success: function (response) {
+                    console.log(response.name);
+                    console.log(response.href);
                 }
             });
         };
 
         document.getElementById('search-form').addEventListener('submit', function (e) {
             e.preventDefault();
-            searchAlbums(document.getElementById('query').value);
+            searchTracks(document.getElementById('query').value);
           }, false);
       }
     })();
