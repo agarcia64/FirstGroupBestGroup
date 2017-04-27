@@ -184,7 +184,7 @@
         return hashParams;
       }
 
-      var cutVal = 63+14,
+      var cutVal = 63+14+4,
           cutDiff = 99+22
           idArray = [];
 
@@ -286,18 +286,20 @@
 
                     userId = userProfilePlaceholder.innerText.slice(posId,posEmail);
 
-                    console.log(userId);
-                    createPlaylist(temp, userId);
+                    //console.log(userId);
+                    var playlistId = createPlaylist(idArray[0], userId);
+                    console.log(playlistId);
+                    var track = idArray[0];
+                    //addTrack(userId, playlistId, track);
                 }
             });
         };
 
-        var createPlaylist = function(temp, userId){
+        var createPlaylist = function(track, userId){
             $.ajax({
                 url: 'https://api.spotify.com/v1/users/'+userId+'/playlists/',
                 method: "POST",
-                data
-                : JSON.stringify({
+                data: JSON.stringify({
                   'name': 'test',
                   'public': true
                 }),
@@ -306,7 +308,29 @@
                   'Content-Type': 'application/json'
                 },
                 success: function (response) {
-                    console.log(42069);
+                    console.log("Playlist created");
+                    console.log(response.id);
+                    console.log(track);
+                    playlistId = response.id;
+                    addTrack(userId, playlistId, track);
+                    
+                }
+            });
+        };
+
+        var addTrack = function(userId, playlistId, track){
+          $.ajax({
+                url: 'https://api.spotify.com/v1/users/'+userId+'/playlists/'+playlistId+'/tracks?uris=spotify:track:'+track,
+                method: "POST",
+                data: JSON.stringify({
+                  "uris": ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh"]
+                }),
+                headers: {
+                  'Authorization': 'Bearer ' + access_token,
+                  'Content-Type': 'application/json'
+                },
+                success: function (response) {
+                    console.log("Track added");
                 }
             });
         };
