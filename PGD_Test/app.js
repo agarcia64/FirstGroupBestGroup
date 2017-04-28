@@ -11,10 +11,48 @@ var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var snoowrap = require('snoowrap');
 
 var client_id = '06630b340a1843bc85e48e2ea681f0be'; // Your client id
 var client_secret = '90569089fedf41a8bf89e9dc46260fd6'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+
+var r = new snoowrap({
+  userAgent: 'please end it all',
+  clientId: 'Gb-SN2CH4EJAVg',
+  clientSecret: 'XTeiP-aP7LgoKUbYBHIwpywBgQQ',
+  username: 'firstGroupBestGroup',
+  password: 'wearethebest'
+});
+
+
+var hotposts = r.getSubreddit('Music').getHot().map(post => post.title);
+hotposts.then(console.log, console.error);
+
+
+
+tokenReq.open("POST", base, true); 
+
+tokenReq.setRequestHeader("Authorization", "application/json");
+
+tokenReq.addEventListener("load", function(){
+    
+    if(tokenReq.status >= 200 && tokenReq.status < 400){
+        
+       var response = JSON.parse(tokenReq.responseText);
+
+       console.log(response);
+    }
+
+    else{
+
+        console.log("Network error"); 
+    }
+
+});//end load function
+
+tokenReq.send("grant_type=client_credentials&client_id=" + clientID + "&client_secret=" + secret);
+
 
 /**
  * Generates a random string containing numbers and letters
@@ -140,6 +178,12 @@ app.get('/refresh_token', function(req, res) {
     }
   });
 });
+
+// Printing a list of the titles on the front page
+//r.getHot().map(post => post.title).then(console.log);
+// Printing the content of a wiki page
+
+
 
 console.log('Listening on 8888');
 app.listen(8888);
