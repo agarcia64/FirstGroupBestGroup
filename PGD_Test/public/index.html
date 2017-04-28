@@ -64,9 +64,9 @@
           <form id="search-form">
             <label for="searching">Genre</label>
             <input class="u-quarter-width" type="text" placeholder="Up to you." id="query">
-            <input type="submit" id="search" class="btn btn-primary" value="Search" href="#band body"
+            <input type="submit" id="search" class="btn btn-primary" value="Search"
+                onClick="document.getElementsByClassName('band body')[0].scrollIntoView();"
                 style = "color: #dabb60; border: 1px solid #bbb;"/>
-
 
           <label for="search-dropdown">Or this works too.</label>
           <select class="u-quarter-width" id="search-dropdown">
@@ -79,7 +79,8 @@
             <option value="polka">Polka</option>
             <option value="k-pop">K-Pop</option>
           </select>
-          <input type="submit" id="search" class="btn btn-primary" value="Search" href="#band body"
+          <input type="submit" id="search" class="btn btn-primary" value="Search"
+              onClick="document.getElementsByClassName('band body')[0].scrollIntoView();"
               style = "color: #dabb60; border: 1px solid #bbb;"/>
           </form>
           
