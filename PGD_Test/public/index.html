@@ -86,8 +86,8 @@
           <div id="results"></div>
           
           <script id="results-template" type="text/x-handlebars-template">
-              {{#each albums.items}}
-              <div style="background-image:url({{images.0.url}})" data-album-id="{{id}}" class="cover"></div>
+              {{#each tracks.items}}
+              <div style="background-image:url({{images.0.url}})" data-track-id="{{id}}" class="cover"></div>
               {{/each}}
           </script> 
         </div> <!-- Search Genre-->
@@ -142,7 +142,7 @@
       <div class="media-body">
         <dl class="dl-horizontal">
           <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
-          <dt>Id</dt><dd>{{id}}</dd>
+          <dt>Id</dt><dd id="userID">{{id}}</dd>
           <dt>Email</dt><dd>{{email}}</dd>
           <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
           <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
@@ -184,13 +184,13 @@
         return hashParams;
       }
 
-      var cutVal = 141,
-          cutDiff = 185
+      var cutVal = 63+14+4,
+          cutDiff = 99+22
           idArray = [];
 
       var userProfileSource = document.getElementById('user-profile-template').innerHTML,
           userProfileTemplate = Handlebars.compile(userProfileSource),
-          userProfilePlaceholder = document.getElementById('user-profile');
+          userProfilePlaceholder = document.getElementById('user-profile')
 
       var oauthSource = document.getElementById('oauth-template').innerHTML,
           oauthTemplate = Handlebars.compile(oauthSource),
@@ -251,41 +251,93 @@
             playingCssClass = 'playing',
             audioObject = null;
 
-        var fetchTracks = function (albumId, callback) {
+        var fetchTracks = function (trackId, callback) {
             $.ajax({
-                url: 'https://api.spotify.com/v1/albums/' + albumId,
+                url: 'https://api.spotify.com/v1/tracks/' + trackId,
                 success: function (response) {
                     callback(response);
                 }
             });
         };
 
-        var searchAlbums = function (query) {
+        var searchTracks = function (query) {
             $.ajax({
                 url: 'https://api.spotify.com/v1/search',
                 data: {
                     q: query,
-                    type: 'album'
+                    type: 'track'
                 },
                 success: function (response) {
                     resultsPlaceholder.innerHTML = template(response);
-                    console.log(resultsPlaceholder.innerHTML);
-                    console.log(1);
+                    // console.log(resultsPlaceholder.innerHTML);
+                    //console.log();
                     var temp = 0;
-                    // Getting the album id's and storing them  
+                    // Getting the track id's and storing them  
                     for(i=cutVal; i<resultsPlaceholder.innerHTML.length; i+=cutDiff){
                       idArray.push(resultsPlaceholder.innerHTML.slice(i,i+22));
-                      console.log(idArray[temp]);
+                      //console.log(idArray[temp]);
                       temp++;
                     }
 
+                    //Get the user's id
+                    var str = userProfilePlaceholder.innerText;
+                    var posId = str.indexOf('Id') + 2;
+                    var posEmail = str.indexOf('Email');
+
+                    userId = userProfilePlaceholder.innerText.slice(posId,posEmail);
+
+                    //console.log(userId);
+                    var playlistId = createPlaylist(idArray[0], userId);
+                    console.log(playlistId);
+                    var track = idArray[0];
+                    //addTrack(userId, playlistId, track);
+                }
+            });
+        };
+
+        var createPlaylist = function(track, userId){
+            $.ajax({
+                url: 'https://api.spotify.com/v1/users/'+userId+'/playlists/',
+                method: "POST",
+                data: JSON.stringify({
+                  'name': 'test',
+                  'public': true
+                }),
+                headers: {
+                  'Authorization': 'Bearer ' + access_token,
+                  'Content-Type': 'application/json'
+                },
+                success: function (response) {
+                    console.log("Playlist created");
+                    console.log(response.id);
+                    console.log(track);
+                    playlistId = response.id;
+                    addTrack(userId, playlistId, track);
+                    
+                }
+            });
+        };
+
+        var addTrack = function(userId, playlistId, track){
+          $.ajax({
+                url: 'https://api.spotify.com/v1/users/'+userId+'/playlists/'+playlistId+'/tracks?uris=spotify:track:'+track,
+                method: "POST",
+                data: JSON.stringify({
+                  "uris": ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh"]
+                }),
+                headers: {
+                  'Authorization': 'Bearer ' + access_token,
+                  'Content-Type': 'application/json'
+                },
+                success: function (response) {
+                    console.log("Track added");
                 }
             });
         };
 
         document.getElementById('search-form').addEventListener('submit', function (e) {
             e.preventDefault();
-            searchAlbums(document.getElementById('query').value);
+            searchTracks(document.getElementById('query').value);
           }, false);
       }
     })();
