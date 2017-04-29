@@ -25,6 +25,7 @@ var r = new snoowrap({
 });
 
 
+
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -68,6 +69,7 @@ app.get('/callback', function(req, res) {
 
   // your application requests refresh and access tokens
   // after checking the state parameter
+  r.getSubreddit('Music').getHot().then(console.log).catch(console.log);
 
   var code = req.query.code || null;
   var state = req.query.state || null;
@@ -153,8 +155,6 @@ app.get('/refresh_token', function(req, res) {
 // Printing a list of the titles on the front page
 //r.getHot().map(post => post.title).then(console.log);
 // Printing the content of a wiki page
-
-
 
 console.log('Listening on 8888');
 app.listen(8888);

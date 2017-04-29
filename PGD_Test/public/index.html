@@ -195,7 +195,7 @@
       }
 
       var cutVal = 63+14+4,
-          cutDiff = 99+22
+          cutDiff = 125,
           idArray = [];
 
       var userProfileSource = document.getElementById('user-profile-template').innerHTML,
@@ -211,6 +211,9 @@
       var access_token = params.access_token,
           refresh_token = params.refresh_token,
           error = params.error;
+
+          var xhr = new XMLHttpRequest();
+
       if (error) {
         alert('There was an error during the authentication');
       } else {
@@ -280,17 +283,19 @@
                     type: 'track'
                 },
                 success: function (response) {
+                    console.log("Okay here", query);
                     resultsPlaceholder.innerHTML = template(response);
                     // console.log(resultsPlaceholder.innerHTML);
                     //console.log();
                     var temp = 0;
                     // Getting the track id's and storing them  
+                    console.log(resultsPlaceholder.innerHTML);
                     for(i=cutVal; i<resultsPlaceholder.innerHTML.length; i+=cutDiff){
                       idArray.push(resultsPlaceholder.innerHTML.slice(i,i+22));
                       //console.log(idArray[temp]);
                       temp++;
                     }
-
+                    console.log(idArray);
                     //Get the user's id
                     var str = userProfilePlaceholder.innerText;
                     var posId = str.indexOf('Id') + 2;
@@ -299,7 +304,7 @@
                     userId = userProfilePlaceholder.innerText.slice(posId,posEmail);
 
                     //console.log(userId);
-                    var playlistId = createPlaylist(idArray[0], userId);
+                    var playlistId = createPlaylist(idArray, userId);
                     console.log(playlistId);
                     var track = idArray[0];
                     //addTrack(userId, playlistId, track);
@@ -307,12 +312,13 @@
             });
         };
 
-        var createPlaylist = function(track, userId){
+        var createPlaylist = function(tracks, userId){
+          var weath = "";
             $.ajax({
                 url: 'https://api.spotify.com/v1/users/'+userId+'/playlists/',
                 method: "POST",
                 data: JSON.stringify({
-                  'name': 'test',
+                  'name': 'Weather Playlist',
                   'public': true
                 }),
                 headers: {
@@ -322,14 +328,36 @@
                 success: function (response) {
                     console.log("Playlist created");
                     console.log(response.id);
-                    console.log(track);
+                    console.log(tracks);
                     playlistId = response.id;
-                    addTrack(userId, playlistId, track);
+                    /*
+                    xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?q=London,uk&callback&appid=2ff973c0156e10642f9bd46e3ae5052d", false);
+                    xhr.send();
+
+                    console.log(JSON.parse(xhr.response).weather[0].main);
+                    console.log(weath);
+                    */
+                    for(i=0; i<10; i++){
+                      addTrack(userId, playlistId, tracks[i]);
+                    }
                     
                 }
             });
         };
+        
+        var getWeather = function(city){
+          console.log(city);
+          var weath = "";
+          xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?q="+city+"&callback&appid=2ff973c0156e10642f9bd46e3ae5052d", false);
+          xhr.send();
 
+          //console.log(JSON.parse(xhr.response).weather[0].main);
+          //console.log(weath);
+          weath = JSON.parse(xhr.response).weather[0].main;
+          //console.log(weath);
+          return weath;
+        };
+        
         var addTrack = function(userId, playlistId, track){
           $.ajax({
                 url: 'https://api.spotify.com/v1/users/'+userId+'/playlists/'+playlistId+'/tracks?uris=spotify:track:'+track,
@@ -349,7 +377,9 @@
 
         document.getElementById('search-form').addEventListener('submit', function (e) {
             e.preventDefault();
-            searchTracks(document.getElementById('query').value);
+            var weath = getWeather(document.getElementById('query').value);
+            console.log(weath);
+            searchTracks(weath);
           }, false);
       }
     })();
