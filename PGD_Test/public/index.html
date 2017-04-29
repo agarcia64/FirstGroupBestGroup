@@ -58,28 +58,29 @@
         </div>
       </div> <!-- login -->
 
-      <div id="loggedin">
+      <div id="loggedin1">
         <div id="search-genre" style= "text-align: center;">
           <h5>Now. Gimme your favorite genre. Or not.</h5>
           <form id="search-form">
             <label for="searching">Genre</label>
             <input class="u-quarter-width" type="text" placeholder="Up to you." id="query">
-            <input type="submit" id="search" class="btn btn-primary" value="Search" href="#band body"
+            <input type="submit" id="search" class="btn btn-primary" value="Search"
+                onClick="document.getElementsByClassName('band body')[0].scrollIntoView();"
                 style = "color: #dabb60; border: 1px solid #bbb;"/>
-
 
           <label for="search-dropdown">Or this works too.</label>
           <select class="u-quarter-width" id="search-dropdown">
-            <option value="Option 1">You lazy f*ck.</option>
-            <option value="Option 2">Pop</option>
-            <option value="Option 3">Rock</option>
-            <option value="Option 4">R&B</option>
-            <option value="Option 5">Hip Hop</option>
-            <option value="Option 6">Alternative</option>
-            <option value="Option 7">Polka</option>
-            <option value="Option 8">K-Pop</option>
+            <option value="">You lazy f*ck.</option>
+            <option value="pop">Pop</option>
+            <option value="rock">Rock</option>
+            <option value="r&b">R&B</option>
+            <option value="hip hop">Hip Hop</option>
+            <option value="alternative">Alternative</option>
+            <option value="polka">Polka</option>
+            <option value="k-pop">K-Pop</option>
           </select>
-          <input type="submit" id="search" class="btn btn-primary" value="Search" href="#band body"
+          <input type="submit" id="search" class="btn btn-primary" value="Search"
+              onClick="document.getElementsByClassName('band body')[0].scrollIntoView();"
               style = "color: #dabb60; border: 1px solid #bbb;"/>
           </form>
           
@@ -96,10 +97,15 @@
 
   </div> <!-- band header -->
 
-  <div class="band body" style="padding-top: 10%">
+  <div class="band body">
     <div class="container">
-      <div id="loggedin">
 
+      <section class="header">
+        <h2 class="title"> Body, motherf*ckers. </h2>
+        <p> Because censoring that 'u' makes it better.</p>
+      </section>
+
+      <div id="loggedin2">
         <div id="user-profile"> </div>
         <div id="oauth"> </div>
         <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
@@ -113,8 +119,7 @@
     <div class="container">
       <section class="header">
         <div class="container">
-        <h2 class="title"> Footer, motherf*ckers. </h2>
-        <p> Because censoring that 'u' makes it better.</p>
+
         </div>
       </section>
     </div>  <!-- container -->
@@ -123,9 +128,14 @@
   <div class="band bottom">
     <div class="container">
       <section class="header">
-        <div class="container">
-        <h2 class="title"> Bottom, motherf*ckers. </h2>
-        <p> Because censoring that 'u' makes it better.</p>
+        <div class="container" style="padding-top: 5%">
+         <h5>Created for</h5>
+         <p>BU CAS CS 411: Software Engineering<br>
+          <br>Jerome Wilfred G. Andaya Jr.
+          <br>Abraham Cohen
+          <br>Clayton Ezzell
+          <br>Alfonso.
+        </p>
         </div>
       </section>
     </div>  <!-- container -->
@@ -220,13 +230,15 @@
                 userProfilePlaceholder.innerHTML = userProfileTemplate(response);
 
                 $('#login').hide();
-                $('#loggedin').show();
+                $('#loggedin1').show();
+                $('#loggedin2').show();
               }
           });
         } else {
             // render initial screen
             $('#login').show();
-            $('#loggedin').hide();
+            $('#loggedin1').hide();
+            $('#loggedin2').hide();
         }
 
         document.getElementById('obtain-new-token').addEventListener('click', function() {
