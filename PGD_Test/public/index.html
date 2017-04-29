@@ -41,7 +41,9 @@
       <section class="header" style="padding-top: 10%">
         <div class="container">
         <h1 class="title"> Surprise, motherf*ckers. </h1>
-        <p> Because censoring that 'u' makes it better.</p>
+        <p> Because censoring that 'u' makes it better. 
+        <br>We got shit working.
+        </p>
         </div>
       </section>
     </div>  <!-- container -->
@@ -49,18 +51,17 @@
     <div class="container">
       <div id="login" style= "text-align: center;">
         <div>
-          <h4>We got shit working.</h4>
+          <h5>We're gonna make a weather playlist of the day for you.<br>Yeah, you heard right. </h5>
           <p></p>
           <a class="button button-primary" href="/login"
               style="background-color: #dabb60; border-color: #dabb60;"> We gon' use this to log in.</a>
           <p></p>
-          <p>We're gonna make a Reddit playlist of the day for you.<br>Yeah, you heard right. </p>
         </div>
       </div> <!-- login -->
 
       <div id="loggedin1">
         <div id="search-genre" style= "text-align: center;">
-          <h5>Now. Gimme your favorite genre. Or not.</h5>
+          <h5>Now. Gimme your City. Or not.</h5>
           <form id="search-form">
             <label for="searching">Genre</label>
             <input class="u-quarter-width" type="text" placeholder="Up to you." id="query">
@@ -97,34 +98,6 @@
 
   </div> <!-- band header -->
 
-  <div id="loggedin2">
-    <div class="band body">
-      <div class="container">
-
-        <section class="header">
-          <h2 class="title"> Body, motherf*ckers. </h2>
-          <p> Because censoring that 'u' makes it better.</p>
-        </section>
-
-          <div id="user-profile"> </div>
-          <div id="oauth"> </div>
-          <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
-
-        
-      </div> <!-- container -->
-    </div> <!-- band body -->
-  </div> <!-- loggedin -->
-
-  <div class="band footer">
-    <div class="container">
-      <section class="header">
-        <div class="container">
-
-        </div>
-      </section>
-    </div>  <!-- container -->
-  </div> <!-- band footer -->
-
   <div class="band bottom">
     <div class="container">
       <section class="header">
@@ -141,23 +114,54 @@
     </div>  <!-- container -->
   </div> <!-- band footer -->
 
+  <div id="loggedin2">
+    <div class="band body">
+      <div class="container">
+
+        <section class="header">
+          <h2 style ="font-size: 1px; line-height: 1px; color:#2b2e26;" class="title"> Body, motherf*ckers. </h2>
+          <p style ="font-size: 1px; line-height: 1px; color:#2b2e26;"> Because censoring that 'u' makes it better.</p>
+        </section>
+
+          <div style ="font-size: 1px; line-height: 1px;" id="user-profile" style="color:#2b2e26;"> </div>
+          <div style ="font-size: 1px; line-height: 1px;" id="oauth" style="color:#2b2e26;"> </div>
+          <button class="btn btn-default" id="obtain-new-token"
+                  style="border:#2b2e26; color:#2b2e26;">Obtain new token using the refresh token</button>
+
+        
+      </div> <!-- container -->
+    </div> <!-- band body -->
+  </div> <!-- alwayshidden -->
+
+  <div class="band footer">
+    <div class="container">
+      <section class="header">
+        <div class="container">
+
+        </div>
+      </section>
+    </div>  <!-- container -->
+  </div> <!-- band footer -->
+
+
+
 
 
   <script id="user-profile-template" type="text/x-handlebars-template">
-    <h1>Logged in as {{display_name}}</h1>
+    <h1  style ="font-size: 1px; line-height: 1px; color:#2b2e26;" >Logged in as {{display_name}}</h1>
     <div class="media">
       <div class="pull-left">
         <img class="media-object" width="150" src="{{images.0.url}}" />
       </div>
       <div class="media-body">
-        <dl class="dl-horizontal">
-          <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
-          <dt>Id</dt><dd id="userID">{{id}}</dd>
-          <dt>Email</dt><dd>{{email}}</dd>
-          <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
-          <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
-          <dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
-          <dt>Country</dt><dd>{{country}}</dd>
+        <dl class="dl-horizontal" style="color:#2b2e26;">
+          <dt style="color:#2b2e26;">Display name</dt><dd class="clearfix">{{display_name}}</dd>
+          <dt style="color:#2b2e26;">Id</dt><dd id="userID">{{id}}</dd>
+          <dt style="color:#2b2e26;">Email</dt><dd>{{email}}</dd>
+          <dt style="color:#2b2e26;">Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
+          <dt style="color:#2b2e26;">Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
+          <dt style="color:#2b2e26;">Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
+          <dt style="color:#2b2e26;">Country</dt><dd>{{country}}</dd>
         </dl>
       </div>
     </div>
@@ -166,10 +170,10 @@
 
 
   <script id="oauth-template" type="text/x-handlebars-template">
-    <h2>oAuth info</h2>
+    <h2  style ="font-size: 1px; line-height: 1px; color:#2b2e26;" >oAuth info</h2>
     <dl class="dl-horizontal">
-      <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
-      <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}></dd>
+      <dt style="color:#2b2e26;">Access token</dt><dd style="color:#2b2e26;" class="text-overflow">{{access_token}}</dd>
+      <dt style="color:#2b2e26;">Refresh token</dt><dd style="color:#2b2e26;" class="text-overflow">{{refresh_token}}></dd>
     </dl>
   </script>
 
@@ -233,6 +237,7 @@
                 userProfilePlaceholder.innerHTML = userProfileTemplate(response);
 
                 $('#login').hide();
+                //$('#alwayshidden').hide();
                 $('#loggedin1').show();
                 $('#loggedin2').show();
               }
@@ -240,6 +245,7 @@
         } else {
             // render initial screen
             $('#login').show();
+            //$('#alwayshidden').hide();
             $('#loggedin1').hide();
             $('#loggedin2').hide();
         }

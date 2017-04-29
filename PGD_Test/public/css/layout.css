@@ -49,6 +49,15 @@
   color: #e0e0e0;
 }
 
+.band.body {
+  margin: auto;
+  width: 100%;
+  height: 300px;
+  opacity: 50%;
+  background: url(../images/bottom_band.png),
+              #f8f8f8;
+  color: #e0e0e0;
+}
 
 .header{
   text-align: center;
