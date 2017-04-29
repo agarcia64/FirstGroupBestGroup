@@ -21,37 +21,8 @@ var r = new snoowrap({
   userAgent: 'please end it all',
   clientId: 'Gb-SN2CH4EJAVg',
   clientSecret: 'XTeiP-aP7LgoKUbYBHIwpywBgQQ',
-  username: 'firstGroupBestGroup',
-  password: 'wearethebest'
+  refreshToken: '73005717-9kwkyNdD-hpuDcrWODkZMofZwAY'
 });
-
-
-var hotposts = r.getSubreddit('Music').getHot().map(post => post.title);
-hotposts.then(console.log, console.error);
-
-
-
-tokenReq.open("POST", base, true); 
-
-tokenReq.setRequestHeader("Authorization", "application/json");
-
-tokenReq.addEventListener("load", function(){
-    
-    if(tokenReq.status >= 200 && tokenReq.status < 400){
-        
-       var response = JSON.parse(tokenReq.responseText);
-
-       console.log(response);
-    }
-
-    else{
-
-        console.log("Network error"); 
-    }
-
-});//end load function
-
-tokenReq.send("grant_type=client_credentials&client_id=" + clientID + "&client_secret=" + secret);
 
 
 /**
@@ -127,7 +98,7 @@ app.get('/callback', function(req, res) {
 
         var access_token = body.access_token,
             refresh_token = body.refresh_token;
-
+       /*     
         var options = {
           url: 'https://api.spotify.com/v1/me',
           headers: { 'Authorization': 'Bearer ' + access_token },
@@ -138,7 +109,7 @@ app.get('/callback', function(req, res) {
         request.get(options, function(error, response, body) {
           console.log(body);
         });
-
+*/
         // we can also pass the token to the browser to make requests from there
         res.redirect('/#' +
           querystring.stringify({
@@ -153,6 +124,7 @@ app.get('/callback', function(req, res) {
       }
     });
   }
+
 });
 
 app.get('/refresh_token', function(req, res) {
@@ -178,7 +150,6 @@ app.get('/refresh_token', function(req, res) {
     }
   });
 });
-
 // Printing a list of the titles on the front page
 //r.getHot().map(post => post.title).then(console.log);
 // Printing the content of a wiki page
