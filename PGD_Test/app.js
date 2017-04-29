@@ -11,20 +11,9 @@ var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
-var snoowrap = require('snoowrap');
-
 var client_id = '06630b340a1843bc85e48e2ea681f0be'; // Your client id
 var client_secret = '90569089fedf41a8bf89e9dc46260fd6'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
-
-var r = new snoowrap({
-  userAgent: 'please end it all',
-  clientId: 'Gb-SN2CH4EJAVg',
-  clientSecret: 'XTeiP-aP7LgoKUbYBHIwpywBgQQ',
-  refreshToken: '73005717-9kwkyNdD-hpuDcrWODkZMofZwAY'
-});
-
-
 
 /**
  * Generates a random string containing numbers and letters
@@ -69,8 +58,7 @@ app.get('/callback', function(req, res) {
 
   // your application requests refresh and access tokens
   // after checking the state parameter
-  r.getSubreddit('Music').getHot().then(console.log).catch(console.log);
-
+  
   var code = req.query.code || null;
   var state = req.query.state || null;
   var storedState = req.cookies ? req.cookies[stateKey] : null;
